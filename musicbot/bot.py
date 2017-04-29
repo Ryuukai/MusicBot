@@ -1390,7 +1390,7 @@ class MusicBot(discord.Client):
 
             if player.current_entry.meta.get('channel', False) and player.current_entry.meta.get('author', False):
                 np_text = "Now Playing: **%s** added by **%s** %s\n" % (
-                    player.current_entry.title, player.current_entry.meta['author'].name, prog_str, url)
+                    player.current_entry.title, player.current_entry.meta['author'].name, prog_str)
             else:
                 np_text = "Now Playing: **%s** %s %s\n" % (player.current_entry.title, prog_str, url)
 
