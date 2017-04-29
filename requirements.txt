@@ -1,5 +1,5 @@
 discord.py[voice]
-youtube_dl >= 2017.03.24
+youtube_dl >= 2017.04.28
 pip
 cffi --only-binary cffi; sys_platform == 'win32'
 cffi; sys_platform != 'win32'
