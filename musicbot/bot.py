@@ -1409,7 +1409,7 @@ class MusicBot(discord.Client):
 
         Call the bot to the summoner's voice channel.
         """
-	return Response("Connected! :ok_hand:", delete_after=20)
+
 
         if not author.voice_channel:
             raise exceptions.CommandError('You are not in a voice channel!')
@@ -1417,6 +1417,7 @@ class MusicBot(discord.Client):
         voice_client = self.the_voice_clients.get(channel.server.id, None)
         if voice_client and voice_client.channel.server == author.voice_channel.server:
             await self.move_voice_client(author.voice_channel)
+            return Response("Connected! :ok_hand:", delete_after=20)
             return
 
         # move to _verify_vc_perms?
