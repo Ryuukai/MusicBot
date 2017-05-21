@@ -260,7 +260,7 @@ class MusicBot(discord.Client):
                     print("Attempting connection...")
                     await asyncio.wait_for(voice_client.connect(), timeout=10, loop=self.loop)
                     print("Connection established.")
-                    reply_text = "Connected."
+                    raise exceptions.HelpfulError("Connected.")
                     break
                 except:
                     traceback.print_exc()
