@@ -363,6 +363,8 @@ class MusicBot(discord.Client):
                 raise exceptions.CommandError(
                     'The bot is not in a voice channel.  '
                     'Use %ssummon to summon it to your voice channel.' % self.config.command_prefix)
+	   elif raise exceptions.CommandError(
+		    'Connected.'
 
             voice_client = await self.get_voice_client(channel)
 
