@@ -1409,7 +1409,7 @@ class MusicBot(discord.Client):
 
         Call the bot to the summoner's voice channel.
         """
-	reply_text = "Connected :ok_hand:"
+	return Response("Connected! :ok_hand:", delete_after=20)
 
         if not author.voice_channel:
             raise exceptions.CommandError('You are not in a voice channel!')
