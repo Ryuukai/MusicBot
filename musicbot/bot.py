@@ -365,6 +365,8 @@ class MusicBot(discord.Client):
                     'Use %ssummon to summon it to your voice channel.' % self.config.command_prefix)
 
             voice_client = await self.get_voice_client(channel)
+	
+reply_text = "Connected."
 
             playlist = Playlist(self)
             player = MusicPlayer(self, voice_client, playlist) \
