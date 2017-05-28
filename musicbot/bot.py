@@ -2368,7 +2368,82 @@ class MusicBot(discord.Client):
             {command_prefix}ma
         baa
         """ 
-        await self.safe_send_message(channel, "t!t marry accept")  
+        await self.safe_send_message(channel, "t!t marry accept")
+
+    async def _eval(message, parameters, recursion=0):
+    output = None
+    if parameters == '':
+        return (commands['eval'][1].format(PREFIX), 1)
+    try:
+        output = eval(parameters)
+    except:
+        traceback.print_exc()
+        return (str(traceback.format_exc()), 2)
+    if asyncio.iscoroutine(output):
+        output = await output
+    return (output, 0)
+    
+@cmd("eval", "```\n{0}eval <evaluation string>\n\nEvaluates <evaluation string> using Python's eval() function and returns a result.```")
+async def cmd_eval(message, parameters, recursion=0):
+    output, errorcode = await _eval(message, parameters, recursion)
+    if errorcode == 1:
+        await reply(message, output)
+    elif errorcode == 2:
+        await reply(message, "**Eval input:**```py\n{}\n```\n**Output (error):**```py\n{}\n```".format(parameters, output))
+    else:
+        await reply(message, "**Eval input:**```py\n{}\n```\n**Output:**```py\n{}\n```".format(parameters, output))
+
+@cmd("oldeval", "```\n{0}oldeval <evaluation string>\n\nEvaluates <evaluation string> using Python's eval() function and returns only the result.```")
+async def cmd_oldeval(message, parameters, recursion=0):
+    output, errorcode = await _eval(message, parameters, recursion)
+    if errorcode == 1:
+        await reply(message, output)
+    else:
+        await reply(message, "```py\n{}\n```".format(output))
+
+@cmd("silenteval", "```\n{0}silenteval <evaluation string>\n\nEvaluates <evaluation string> using Python's eval() function. Mainly used for coroutines.```")
+async def cmd_silenteval(message, parameters, recursion=0):
+    output, errorcode = await _eval(message, parameters, recursion)
+
+async def _exec(message, parameters, recursion=0):
+    if parameters == '':
+        return (commands['exec'][1].format(PREFIX), 1)
+    old_stdout = sys.stdout
+    redirected_output = sys.stdout = StringIO()
+    result = None
+    try:
+        exec(parameters)
+        result = (redirected_output.getvalue(), 0)
+    except Exception:
+        traceback.print_exc()
+        result = (str(traceback.format_exc()), 2)
+    finally:
+        sys.stdout = old_stdout
+    return result
+
+@cmd("exec", "```\n{0}exec <exec string>\n\nExecutes <exec string> using Python's exec() function.```")
+async def cmd_exec(message, parameters, recursion=0):
+    output, errorcode = await _exec(message, parameters, recursion)
+    if errorcode == 1:
+        await reply(message, output)
+    elif errorcode == 2:
+        await reply(message, "**Exec input:**```py\n{}\n```\n**Output (error):**```py\n{}\n```".format(parameters, output))
+    else:
+        await reply(message, "**Exec input:**```py\n{}\n```\n**Output:**```py\n{}\n```".format(parameters, output))
+
+@cmd("oldexec", "```\n{0}oldexec <exec string>\n\nExecutes <exec string> using Python's exec() function.```")
+async def cmd_oldexec(message, parameters, recursion=0):
+    output, errorcode = await _exec(message, parameters, recursion)
+    if errorcode == 1:
+        await reply(message, output)
+    elif errorcode == 2:
+        await reply(message, "```py\n{}\n```".format(output))
+    else:
+        await reply(message, output)
+
+@cmd("silentexec", "```\n{0}silentexec <exec string>\n\nSilently executes <exec string> using Python's exec() function.```")
+async def cmd_silentexec(message, parameters, recursion=0):
+    output, errorcode = await _exec(message, parameters, recursion)
 	
 if __name__ == '__main__':
     bot = MusicBot()
