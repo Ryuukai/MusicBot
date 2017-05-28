@@ -8,11 +8,10 @@ from concurrent.futures import ThreadPoolExecutor
 ytdl_format_options = {
     'hlspreferffmpeg': True,
     'preferffmpeg': True,
-    'recodevideo': 'mp4',
     'format': 'best',
     'extractaudio': True,
-    'audioformat': 'opus',
-    'audioquality': '0',
+    'audioformat': 'best',
+    'audioquality': '320k',
     'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
     'restrictfilenames': True,
     'noplaylist': True,
