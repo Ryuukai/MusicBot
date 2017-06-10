@@ -2329,13 +2329,16 @@ class MusicBot(discord.Client):
             await self.reconnect_voice_client(after)
 
 
-    async def cmd_ping(self, channel):
+    async def cmd_ping(message, parameters, recursion=0):
         """
         Usage:
             {command_prefix}ping
-        Ping command to test latency
+        Pings the bot and returns the latency
         """
-        await self.safe_send_message(channel, "Pong!")
+        ts = message.timestamp
+        new_msg = await reply(message, 'PONG!')
+        latency = new_msg.edited_timestamp - ts
+        await reply(message, "PONG! {}ms".format(latency.microseconds // 1000))
 
     async def cmd_sendall(self, args, leftover_args):
         """
