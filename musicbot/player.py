@@ -19,7 +19,7 @@ class PatchedBuff:
     def __init__(self, buff, *, draw=False):
         self.buff = buff
         self.frame_count = 0
-        self.volume = 1.0
+        self.volume = 1.25
 
         self.draw = draw
         self.use_audioop = True
@@ -250,7 +250,7 @@ class MusicPlayer(EventEmitter):
 
                 self._current_player = self._monkeypatch_player(self.voice_client.create_ffmpeg_player(
                     entry.filename,
-                    before_options="-nostdin -drc_scale == 0",
+                    before_options="-nostdin",
                     options="-vn -ac 2 -acodec ac3 -b:a 320k -af dynaudnorm",
                     # Threadsafe call soon, b/c after will be called from the voice playback thread.
                     after=lambda: self.loop.call_soon_threadsafe(self._playback_finished)
