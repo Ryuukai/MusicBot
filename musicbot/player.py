@@ -19,7 +19,7 @@ class PatchedBuff:
     def __init__(self, buff, *, draw=False):
         self.buff = buff
         self.frame_count = 0
-        self.volume = 1.25
+        self.volume = 2
 
         self.draw = draw
         self.use_audioop = True
