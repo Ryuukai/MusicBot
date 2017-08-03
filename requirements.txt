@@ -1,5 +1,5 @@
 discord.py[voice]
-youtube_dl >= 2017.06.12
+youtube_dl >= 2017.07.30.1
 pip
 cffi
 PyNaCl
